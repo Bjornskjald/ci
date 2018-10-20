@@ -22,7 +22,7 @@ app.post('/webhook', async (req, res) => {
   if (genSig(req.body) !== req.headers['x-hub-signature']) return res.sendStatus(401)
   res.sendStatus(200)
   if (req.headers['x-github-event'] !== 'pull_request') return
-  const { head: { sha, repo: { full_name } }, base: { ref } } = req.body.pull_request.head // eslint-disable-line camelcase
+  const { head: { sha, repo: { full_name } }, base: { ref } } = req.body.pull_request // eslint-disable-line camelcase
   if (ref !== 'master') return
   await setStatus(full_name, sha, token, 'pending')
   const checks = await checkReady()

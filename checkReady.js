@@ -1,13 +1,16 @@
 const tmp = require('tmp')
 const path = require('path')
-const { Clone } = require('nodegit')
+const git = require('isomorphic-git')
 const fs = require('fs-extra')
 const latestVersion = require('latest-version')
 const parseChangelog = require('changelog-parser')
+git.plugins.set('fs', fs)
 
 module.exports = async () => {
   const dir = tmp.dirSync()
-  await Clone.clone('https://github.com/miscord/miscord', dir.name, { checkoutBranch: 'dev' })
+  await git.clone({ dir: dir.name, url: 'https://github.com/miscord/miscord' })
+  const current = await git.currentBranch({ dir: dir.name })
+  if (current !== 'dev') await git.checkout({ dir: dir.name, ref: 'dev' })
   const pkg = require(path.join(dir.name, 'package.json'))
   const npmVersion = await latestVersion('miscord')
   console.dir(pkg.version)
