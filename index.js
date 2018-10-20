@@ -28,10 +28,10 @@ app.post('/webhook', async (req, res) => {
   const checks = await checkReady()
   if (checks.npm && checks.changelog && checks.newVersion) return setStatus(full_name, sha, token, 'success')
   const failed = [
-    checks.npm ? 'NPM' : null,
-    checks.changelog ? 'changelog' : null,
-    checks.newVersion ? 'version increment' : null
+    checks.npm ? null : 'NPM',
+    checks.changelog ? null : 'changelog',
+    checks.newVersion ? null : 'version increment'
   ].filter(e => e)
-  setStatus(full_name, sha, token, 'failed', 'Failed checks: ' + failed.join(', '))
+  setStatus(full_name, sha, token, 'failure', 'Failed checks: ' + failed.join(', '))
 })
 app.listen(5500, () => console.log('I\'m listening!'))

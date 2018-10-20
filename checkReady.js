@@ -20,6 +20,8 @@ module.exports = async () => {
   const { version: master } = require(path.join(dir.name, 'package.json'))
 
   const npm = await latestVersion('miscord')
+
+  await git.checkout({ dir: dir.name, ref: 'dev' })
   const { version: changelog } = (await parseChangelog(path.join(dir.name, 'CHANGELOG.md'))).versions[0]
 
   await fs.remove(dir.name)
