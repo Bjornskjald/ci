@@ -1,0 +1,33 @@
+{
+  "name": "@miscord/ci",
+  "version": "1.0.0",
+  "description": "CI for checking PRs to master in miscord/miscord",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miscord/ci.git"
+  },
+  "keywords": [
+    "miscord"
+  ],
+  "author": "Bjornskjald <github@bjorn.ml> (https://bjorn.ml/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/miscord/ci/issues"
+  },
+  "homepage": "https://github.com/miscord/ci#readme",
+  "dependencies": {
+    "changelog-parser": "^2.5.0",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "fs-extra": "^7.0.0",
+    "jsonwebtoken": "^8.3.0",
+    "latest-version": "^4.0.0",
+    "nodegit": "^0.23.0-alpha.2",
+    "superagent": "^4.0.0-beta.5",
+    "tmp": "0.0.33"
+  }
+}
