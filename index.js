@@ -21,10 +21,10 @@ app.post('/webhook', async (req, res) => {
   console.dir(req.body)
   if (genSig(req.body) !== req.headers['x-hub-signature']) return res.sendStatus(401)
   res.sendStatus(200)
-  if (req.headers['x-github-event'] !== 'pull_request') return
-  if (req.body.action === 'closed') return
+  if (req.headers['x-github-event'] !== 'pull_request') return console.log('It\'s not a pull request, ignoring.')
+  if (req.body.action === 'closed') return console.log('PR is being closed, ignoring.')
   const { head: { sha, repo: { full_name } }, base: { ref } } = req.body.pull_request // eslint-disable-line camelcase
-  if (ref !== 'master') return
+  if (ref !== 'master') return console.log('It\'s not a pull request to master, ignoring.')
   await setStatus(full_name, sha, token, 'pending')
   const checks = await checkReady()
   if (checks.npm && checks.changelog && checks.newVersion) return setStatus(full_name, sha, token, 'success')
