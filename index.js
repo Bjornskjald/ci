@@ -34,7 +34,7 @@ app.register(require('fastify-static'), {
 app.get('/', async (req, res) => {
   res.header('Content-Security-Policy', `default-src 'self' https: wss: 'unsafe-inline';`)
   res.view('index.marko', {
-    pullRequests: await db.find({})
+    pullRequests: await db.find({}).sort({ id: -1 }).limit(50)
   })
 })
 app.post('/webhook', require('./lib/webhook')(db, websocketClients))

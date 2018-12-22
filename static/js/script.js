@@ -58,7 +58,8 @@ ws.onmessage = async message => {
       refreshButton.removeEventListener('click', refreshButtonClickListener)
     }
   } else {
-    document.querySelector('.collection').innerHTML += PullRequest(json)
+    const collection = document.querySelector('.collection')
+    collection.innerHTML = PullRequest(json) + collection.innerHTML
     const { refreshButton, tooltip } = getPullRequestElements(json.id)
     M.Tooltip.init(tooltip)
     refreshButton.addEventListener('click', refreshButtonClickListener)
