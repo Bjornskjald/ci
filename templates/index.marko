@@ -1,0 +1,80 @@
+$ const icons = {
+  pending: 'brightness_1',
+  success: 'check',
+  failure: 'close',
+  merged: 'done_all'
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Miscord CI</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <style>
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="nav-wrapper teal lighten-1">
+        <a href="#" class="brand-logo center">Miscord CI</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <div class="container">
+      <div class="section">
+        <ul class="collection">
+          <if(!data.pullRequests.length)>
+            <li class="collection-item">No pull requests!</li>
+          </if>
+          <for(pr in data.pullRequests)>
+            <li data-id="${pr.id}" class="collection-item">
+              #${pr.id} - ${pr.name}
+              <div class="secondary-content">
+                <a class="status tooltipped" data-position="top" data-tooltip="${pr.description || pr.status}">
+                  <i class="material-icons">${icons[pr.status]}</i>
+                </a>
+                <a href="#!" class="refresh-button">
+                  <i class="material-icons">refresh</i>
+                </a>
+              </div>
+            </li>
+          </for>
+        </ul>
+      </div>
+    </div>
+  </main>
+  <footer class="page-footer teal lighten-1">
+    <div class="footer-copyright">
+      <div class="container">
+      © 2018 Bjornskjald
+      </div>
+    </div>
+  </footer>
+  <script src="/js/script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    window.icons = ${JSON.stringify(data.icons)}
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tooltips = document.querySelectorAll('.tooltipped')
+      M.Tooltip.init(tooltips)
+    })
+  </script>
+</body>
+</html>

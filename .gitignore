@@ -1,2 +1,4 @@
 node_modules
 .env
+templates/*.marko.js
+pull_requests.db

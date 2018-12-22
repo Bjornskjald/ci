@@ -22,11 +22,17 @@
   "dependencies": {
     "changelog-parser": "^2.5.0",
     "dotenv": "^6.1.0",
-    "express": "^4.16.4",
+    "fastify": "^1.13.3",
+    "fastify-static": "^1.0.0",
+    "fastify-websocket": "^0.3.0",
     "fs-extra": "^7.0.0",
     "isomorphic-git": "^0.37.3",
     "jsonwebtoken": "^8.3.0",
     "latest-version": "^4.0.0",
+    "marko": "^4.14.7",
+    "nedb-promises": "^3.0.2",
+    "octicons": "^8.2.0",
+    "point-of-view": "^2.1.0",
     "superagent": "^4.0.0-beta.5",
     "tmp": "0.0.33"
   }
