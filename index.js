@@ -2,12 +2,6 @@ require('dotenv').config()
 const fastify = require('fastify')
 const path = require('path')
 const marko = require('marko')
-const octicons = require('octicons')
-const icons = {
-  pending: octicons['primitive-dot'].toSVG(),
-  success: octicons.check.toSVG(),
-  failure: octicons.x.toSVG()
-}
 const WSClientArray = require('./lib/WSClientArray')
 const Datastore = require('nedb-promises')
 // const db = Datastore.create({
@@ -32,8 +26,7 @@ app.register(require('fastify-static'), {
 })
 app.get('/', async (req, res) => {
   res.view('index.marko', {
-    pullRequests: await db.find({}),
-    icons
+    pullRequests: await db.find({})
   })
 })
 app.post('/webhook', require('./lib/handleWebhook')(db, websocketClients))
