@@ -20,7 +20,7 @@ const icons = {
 
 const PullRequest = pr => `
 <li data-id="${pr.id}" class="collection-item">
-  #${pr.id} - ${pr.name}
+  <a href=${pr.url}>#${pr.id} - ${pr.name}</a>
   <div class="secondary-content">
     <a class="status tooltipped" data-position="top" data-tooltip="${pr.description || pr.status}">
       <i class="material-icons">${icons[pr.status]}</i>

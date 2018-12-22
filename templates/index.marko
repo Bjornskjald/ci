@@ -43,8 +43,8 @@ $ const icons = {
             <li class="collection-item">No pull requests!</li>
           </if>
           <for(pr in data.pullRequests)>
-            <li data-id="${pr.id}" class="collection-item">
-              #${pr.id} - ${pr.name}
+            <li data-id=pr.id class="collection-item">
+              <a href=pr.url>#${pr.id} - ${pr.name}</a>
               <div class="secondary-content">
                 <a class="status tooltipped" data-position="top" data-tooltip="${pr.description || pr.status}">
                   <i class="material-icons">${icons[pr.status]}</i>
