@@ -12,6 +12,14 @@ const db = Datastore.create()
 
 let websocketClients = new WSClientArray()
 
+const generateJWT = require('./lib/generateJWT')
+const getInstallationToken = require('./lib/getInstallationToken')
+
+let jwt = generateJWT()
+getInstallationToken(jwt).then(token => { global.token = token })
+setInterval(() => { jwt = generateJWT() }, 5 * 60 * 1000)
+setInterval(async () => { global.token = await getInstallationToken(jwt) }, 10 * 60 * 1000)
+
 const app = fastify()
 app.register(require('fastify-websocket'), {
   handle: conn => websocketClients.push(conn)
@@ -30,5 +38,6 @@ app.get('/', async (req, res) => {
     pullRequests: await db.find({})
   })
 })
-app.post('/webhook', require('./lib/handleWebhook')(db, websocketClients))
+app.post('/webhook', require('./lib/webhook')(db, websocketClients))
+app.post('/refresh', require('./lib/refresh')(db, websocketClients))
 app.listen(5500, () => console.log('I\'m listening!'))

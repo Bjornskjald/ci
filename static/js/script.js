@@ -1,5 +1,14 @@
 /* globals WebSocket FileReader location M */
 const getPullRequestById = id => Array.from(document.querySelectorAll('.collection-item')).find(el => el.dataset.id === id.toString())
+const getPullRequestElements = id => {
+  const pr = getPullRequestById(id)
+  return {
+    status: pr.querySelector('.status'),
+    statusIcon: pr.querySelector('.status > i'),
+    refreshButton: pr.querySelector('.refresh-button'),
+    tooltip: pr.querySelector('.tooltipped')
+  }
+}
 
 const icons = {
   pending: 'brightness_1',
@@ -30,17 +39,27 @@ function parseBlob (blob) {
   })
 }
 
+function refreshButtonClickListener (ev) {
+  const id = ev.target.parentNode.parentNode.parentNode.dataset.id
+  window.currentRefreshId = id
+  window.modal.open()
+}
+
 const ws = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}`)
 ws.onmessage = async message => {
   const text = await parseBlob(message.data)
   const json = JSON.parse(text)
   if (getPullRequestById(json.id)) {
-    const status = getPullRequestById(json.id).querySelector('.status')
-    status.querySelector('i').innerHTML = icons[json.status]
+    const { status, statusIcon, refreshButton } = getPullRequestElements(json.id)
+    statusIcon.innerHTML = icons[json.status]
     status.dataset.tooltip = json.description || json.status
+    if (json.status === 'merged') {
+      refreshButton.removeEventListener('click', refreshButtonClickListener)
+    }
   } else {
     document.querySelector('.collection').innerHTML += PullRequest(json)
-    const newTooltip = getPullRequestById(json.id).querySelector('.tooltipped')
-    M.Tooltip.init(newTooltip)
+    const { refreshButton, tooltip } = getPullRequestElements(json.id)
+    M.Tooltip.init(tooltip)
+    refreshButton.addEventListener('click', refreshButtonClickListener)
   }
 }
