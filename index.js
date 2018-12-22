@@ -4,11 +4,10 @@ const path = require('path')
 const marko = require('marko')
 const WSClientArray = require('./lib/WSClientArray')
 const Datastore = require('nedb-promises')
-// const db = Datastore.create({
-//   filename: 'pull_requests.db',
-//   autoload: true
-// })
-const db = Datastore.create()
+const db = Datastore.create({
+  filename: 'pull_requests.db',
+  autoload: true
+})
 
 let websocketClients = new WSClientArray()
 
