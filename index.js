@@ -25,7 +25,7 @@ app.register(require('fastify-static'), {
   prefix: '/js/'
 })
 app.get('/', async (req, res) => {
-  res.header('Content-Security-Policy', `default-src 'self' https://ci.misc.gq https://ci.miscord.net https://cdnjs.cloudflare.com 'unsafe-inline';`)
+  res.header('Content-Security-Policy', `default-src 'self' https: wss: 'unsafe-inline';`)
   res.view('index.marko', {
     pullRequests: await db.find({})
   })
