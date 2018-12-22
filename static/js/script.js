@@ -14,7 +14,8 @@ const icons = {
   pending: 'brightness_1',
   success: 'check',
   failure: 'close',
-  merged: 'done_all'
+  merged: 'done_all',
+  closed: 'close'
 }
 
 const PullRequest = pr => `
