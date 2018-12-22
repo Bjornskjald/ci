@@ -30,7 +30,7 @@ function parseBlob (blob) {
   })
 }
 
-const ws = new WebSocket('ws://' + location.host)
+const ws = new WebSocket(`${location.protocol === 'https:' ? 'ws' : 'wss'}'://${location.host}`)
 ws.onmessage = async message => {
   const text = await parseBlob(message.data)
   const json = JSON.parse(text)
