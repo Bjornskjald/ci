@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('#modal-submit').addEventListener('click', modalSubmitClickListener)
 })
 
-function modalSubmitClickListener () { // eslint-disable-line no-unused-vars
+function modalSubmitClickListener () {
   document.querySelector('#modal-submit').classList.add('disabled')
   fetch('/refresh', {
     method: 'POST',
