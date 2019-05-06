@@ -5,7 +5,7 @@ const marko = require('marko')
 const WSClientArray = require('./lib/WSClientArray')
 const Datastore = require('nedb-promises')
 const db = Datastore.create({
-  filename: 'pull_requests.db',
+  filename: '/data/pull_requests.db',
   autoload: true
 })
 
@@ -39,4 +39,4 @@ app.get('/', async (req, res) => {
 })
 app.post('/webhook', require('./lib/webhook')(db, websocketClients))
 app.post('/refresh', require('./lib/refresh')(db, websocketClients))
-app.listen(5500, () => console.log('I\'m listening!'))
+app.listen(5500, '0.0.0.0', () => console.log('I\'m listening!'))
